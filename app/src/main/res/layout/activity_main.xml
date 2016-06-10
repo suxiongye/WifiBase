@@ -20,42 +20,48 @@
         android:layout_height="wrap_content"
         android:text="wifi_on"
         android:id="@+id/openWifiButton"
+        android:layout_marginTop="36dp"
         android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="48dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="wifi_off"
         android:id="@+id/closeWIfiButton"
-        android:layout_alignTop="@+id/openWifiButton"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="38dp" />
+        android:layout_above="@+id/refreshPeersButton"
+        android:layout_alignLeft="@+id/refreshPeersButton"
+        android:layout_alignStart="@+id/refreshPeersButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="FindPeer"
         android:id="@+id/findPeerButton"
-        android:layout_below="@+id/openWifiButton"
-        android:layout_toStartOf="@+id/closeWIfiButton" />
+        android:layout_alignBaseline="@+id/receiveButton"
+        android:layout_alignBottom="@+id/receiveButton"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="showPeers"
         android:id="@+id/showPeersTextView"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignBaseline="@+id/connectButton"
+        android:layout_alignBottom="@+id/connectButton"
+        android:layout_alignLeft="@+id/sendButton"
+        android:layout_alignStart="@+id/sendButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="refresh"
         android:id="@+id/refreshPeersButton"
-        android:layout_below="@+id/showPeersTextView"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/openWifiButton"
+        android:layout_toLeftOf="@+id/connectButton"
+        android:layout_toStartOf="@+id/connectButton" />
 
     <Button
         android:layout_width="wrap_content"
@@ -64,4 +70,41 @@
         android:id="@+id/connectButton"
         android:layout_below="@+id/refreshPeersButton"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="send"
+        android:id="@+id/sendButton"
+        android:layout_above="@+id/receiveButton"
+        android:layout_toRightOf="@+id/fileStatusTextView"
+        android:layout_toEndOf="@+id/fileStatusTextView"
+        android:layout_marginBottom="61dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="receive"
+        android:id="@+id/receiveButton"
+        android:layout_above="@+id/fileStatusTextView"
+        android:layout_toLeftOf="@+id/connectButton"
+        android:layout_toStartOf="@+id/connectButton"
+        android:layout_marginBottom="88dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="disconnect"
+        android:id="@+id/diconnectButton"
+        android:layout_alignTop="@+id/sendButton"
+        android:layout_alignLeft="@+id/receiveButton"
+        android:layout_alignStart="@+id/receiveButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="fileStatus"
+        android:id="@+id/fileStatusTextView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
