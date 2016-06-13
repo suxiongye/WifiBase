@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
     private TextView fileStatusTextView;
     private TextView showPeersTextView;
 
-    private WifiAdmin wifiAdmin;
+    private WiFiAdmin wifiAdmin;
 
 
     @Override
@@ -61,7 +61,7 @@ public class MainActivity extends Activity {
         //p2p wifi setup
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
-        receiver = new WiFiDirectBroadcastReceiver(manager, channel, this);
+
         intentFilter = new IntentFilter();
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
@@ -80,8 +80,8 @@ public class MainActivity extends Activity {
         textView = (TextView) findViewById(R.id.textView);
         fileStatusTextView = (TextView) findViewById(R.id.fileStatusTextView);
         showPeersTextView = (TextView) findViewById(R.id.showPeersTextView);
-        wifiAdmin = new WifiAdmin(this);
-
+        wifiAdmin = new WiFiAdmin(manager, this);
+        receiver = wifiAdmin.getWiFiBroadcastReceiver();
 
         openWifiButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 textView.setText("wifi off");
-                wifiAdmin.closeWifi();
+                wifiAdmin.createFile();
             }
         });
 
@@ -126,20 +126,19 @@ public class MainActivity extends Activity {
                 disconnectDevice();
             }
         });
+
+        receiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendFile();
             }
         });
-
-        receiveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                receiveFile();
-            }
-        });
-
     }
 
     /**
@@ -176,7 +175,7 @@ public class MainActivity extends Activity {
     }
 
     private void refreshPeers() {
-        List<WifiP2pDevice> list = ((WiFiDirectBroadcastReceiver) receiver).getPeersList();
+        List<WifiP2pDevice> list = ((WiFiDirectBroadcastReceiver) receiver).getDevices();
         showPeersTextView.setText("");
         for (WifiP2pDevice device : list) {
             showPeersTextView.append(device.deviceName + ":" + device.deviceAddress + "\n");
@@ -184,7 +183,7 @@ public class MainActivity extends Activity {
     }
 
     private void connectFirst() {
-        List<WifiP2pDevice> list = ((WiFiDirectBroadcastReceiver) receiver).getPeersList();
+        List<WifiP2pDevice> list = ((WiFiDirectBroadcastReceiver) receiver).getDevices();
         if (list.size() > 0) {
             connectDevice(list.get(0));
         }
@@ -224,12 +223,9 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void sendFile() {
-        ((WiFiDirectBroadcastReceiver) receiver).sendFile(getIntent(), this.getApplicationContext());
+    public void sendFile(){
+        wifiAdmin.sendFileByPath(Environment.getExternalStorageDirectory()+"/WifiBase/pic.png");
     }
 
-    private void receiveFile() {
-        ((WiFiDirectBroadcastReceiver) receiver).recieveFile();
-    }
 }
 
